@@ -1,0 +1,40 @@
+{
+  "datasetName": "SecureX Educational Certificate Registry",
+  "datasetVersion": "1.0",
+  "documentType": "educational_certificate",
+  "records": [
+    {
+      "recordId": "EDU-001",
+      "documentNumber": "SX-EDU-2026-20001",
+      "studentName": "Neha Sharma",
+      "institution": "Sample Technical University",
+      "qualification": "Bachelor of Technology",
+      "rollNumber": "SXROLL2026001",
+      "passingYear": 2026,
+      "issueDate": "2026-06-15",
+      "status": "valid"
+    },
+    {
+      "recordId": "EDU-002",
+      "documentNumber": "SX-EDU-2026-20002",
+      "studentName": "Arjun Das",
+      "institution": "Sample Technical University",
+      "qualification": "Bachelor of Technology",
+      "rollNumber": "SXROLL2026002",
+      "passingYear": 2026,
+      "issueDate": "2026-06-20",
+      "status": "valid"
+    },
+    {
+      "recordId": "EDU-003",
+      "documentNumber": "SX-EDU-2026-20003",
+      "studentName": "Maya Roy",
+      "institution": "Sample Technical University",
+      "qualification": "Bachelor of Science",
+      "rollNumber": "SXROLL2026003",
+      "passingYear": 2025,
+      "issueDate": "2025-06-18",
+      "status": "revoked"
+    }
+  ]
+}

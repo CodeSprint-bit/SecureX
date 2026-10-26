@@ -1,0 +1,37 @@
+{
+  "datasetName": "SecureX Residence Certificate Registry",
+  "datasetVersion": "1.0",
+  "documentType": "residence_certificate",
+  "records": [
+    {
+      "recordId": "RES-001",
+      "documentNumber": "SX-RES-2026-00125",
+      "fullName": "Aarav Mehta",
+      "dateOfBirth": "2002-05-14",
+      "issueDate": "2026-01-10",
+      "issuingAuthority": "Sample District Office",
+      "issuingDistrict": "North District",
+      "status": "valid"
+    },
+    {
+      "recordId": "RES-002",
+      "documentNumber": "SX-RES-2026-00126",
+      "fullName": "Diya Sharma",
+      "dateOfBirth": "2001-09-22",
+      "issueDate": "2026-02-15",
+      "issuingAuthority": "Sample District Office",
+      "issuingDistrict": "East District",
+      "status": "valid"
+    },
+    {
+      "recordId": "RES-003",
+      "documentNumber": "SX-RES-2026-00127",
+      "fullName": "Ananya Roy",
+      "dateOfBirth": "2002-11-19",
+      "issueDate": "2026-04-12",
+      "issuingAuthority": "Sample District Office",
+      "issuingDistrict": "West District",
+      "status": "revoked"
+    }
+  ]
+}

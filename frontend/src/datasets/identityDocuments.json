@@ -1,0 +1,37 @@
+{
+  "datasetName": "SecureX Identity Reference Dataset",
+  "datasetVersion": "1.0",
+  "documentType": "identity_document",
+  "records": [
+    {
+      "recordId": "ID-001",
+      "documentType": "Sample Identity Card",
+      "documentNumber": "SX-ID-2026-10001",
+      "fullName": "Rahul Das",
+      "dateOfBirth": "2001-06-18",
+      "issueDate": "2026-01-15",
+      "issuingAuthority": "Sample Identity Authority",
+      "status": "valid"
+    },
+    {
+      "recordId": "ID-002",
+      "documentType": "Sample Identity Card",
+      "documentNumber": "SX-ID-2026-10002",
+      "fullName": "Priya Verma",
+      "dateOfBirth": "2002-08-24",
+      "issueDate": "2026-02-20",
+      "issuingAuthority": "Sample Identity Authority",
+      "status": "valid"
+    },
+    {
+      "recordId": "ID-003",
+      "documentType": "Sample Identity Card",
+      "documentNumber": "SX-ID-2026-10003",
+      "fullName": "Karan Roy",
+      "dateOfBirth": "2000-12-05",
+      "issueDate": "2026-03-10",
+      "issuingAuthority": "Sample Identity Authority",
+      "status": "revoked"
+    }
+  ]
+}
