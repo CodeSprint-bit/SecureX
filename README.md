@@ -1,71 +1,79 @@
-# SecureX — AI-Powered Document Verification
+﻿# SecureX — AI-Powered Document Verification
 
-**SecureX** is a web-based document verification platform designed to help authorized personnel review identity documents, identify potential tampering indicators, and manage verification activities through a centralized dashboard.
+SecureX is a web application for supporting document verification workflows, officer and checkpost management, verification history, and case reporting.
 
-The project combines a modern React frontend with a Python FastAPI backend to support document screening, verification history, checkpost workflows, and case reporting.
+The project uses React and Vite for the frontend, FastAPI for the backend, and SQLite for local data storage.
 
-> **Important:** Automated analysis can identify potential anomalies, but it cannot independently prove that a document is genuine or fraudulent. Official verification requires appropriate issuer or cryptographic validation where available.
+> **Important:** Automated document analysis can identify potential anomalies, but does not independently prove that a document is genuine or fraudulent. Official verification requires appropriate issuer or cryptographic validation where available.
 
-## ✨ Features
+## Features
 
-- **Document Verification:** Review documents and identify potential inconsistencies.
-- **OCR-Based Analysis:** Extract text from supported documents where OCR is implemented.
-- **Verification History:** Keep track of verification activities.
-- **Checkpost Management:** Support checkpost-related workflows and location-based information.
-- **Case Reporting:** Provide workflows for recording and managing reported cases.
-- **Authentication:** Support user authentication and access-controlled functionality where configured.
-- **Admin Dashboard:** Provide administrative tools for managing relevant platform activities.
-- **Responsive Interface:** Built with React and Vite for a modern web experience.
+- Officer authentication and account workflows
+- Checkpost management
+- Document verification records and history
+- OCR text storage and document-processing dependencies
+- Case reporting
+- Administrative workflows
+- REST API with interactive documentation
 
-*Feature availability depends on the current implementation and configuration. Some verification methods may require additional integrations or models.*
+Feature availability depends on the implemented routes and integrated processing pipeline. Installed libraries alone do not establish that a feature is operational.
 
-## 🛠️ Technology Stack
+## Technology Stack
 
 | Component | Technologies |
 |---|---|
-| Frontend | React.js, Vite, JavaScript, CSS |
+| Frontend | React, Vite, JavaScript |
+| Routing | React Router |
+| Maps | Leaflet, React Leaflet |
 | Backend | Python, FastAPI |
-| API Communication | REST API |
-| Document Analysis | OCR and image-processing components, where implemented |
-| Database | Depends on the backend configuration |
-| Development Tools | Visual Studio Code, Git, GitHub |
+| Database | SQLite, SQLAlchemy |
+| Authentication | JWT, pwdlib password hashing |
+| Document processing dependencies | OpenCV, Pillow, PyMuPDF, pytesseract, pyzbar |
+| OCR dependency in frontend | Tesseract.js |
+| PDF generation dependency | ReportLab |
 
-## 📁 Project Structure
+## Project Structure
 
 ```text
 SecureX/
 ├── backend/
 │   ├── app/
 │   │   ├── routers/
+│   │   │   ├── auth.py
+│   │   │   ├── admin.py
+│   │   │   ├── history.py
+│   │   │   └── case_reports.py
 │   │   ├── database.py
 │   │   ├── main.py
 │   │   ├── models.py
 │   │   ├── schemas.py
 │   │   └── security.py
+│   ├── requirements.txt
 │   └── tests/
+├── docs/
+│   └── TECHNICAL_DESIGN.md
 ├── frontend/
 │   ├── public/
 │   ├── src/
-│   │   ├── datasets/
-│   │   ├── App.jsx
-│   │   ├── Checkposts.jsx
-│   │   └── main.jsx
-│   ├── package.json
-│   └── vite.config.js
+│   └── package.json
+├── sample_data/
+│   └── README.md
+├── .env.example
 ├── .gitignore
+├── LICENSE
 └── README.md
 ```
 
-## 🚀 Getting Started
+## Prerequisites
 
-### Prerequisites
-
-Install the following on your computer:
+Install:
 
 - Python
 - Node.js and npm
 - Git
 - Visual Studio Code (recommended)
+
+## Run SecureX on Windows
 
 ### 1. Clone the repository
 
@@ -74,44 +82,53 @@ git clone https://github.com/CodeSprint-bit/SecureX.git
 cd SecureX
 ```
 
-### 2. Set up the backend
+If you already have the project, open PowerShell in its root directory instead.
 
-From the project root, run:
+### 2. Configure the backend
 
 ```powershell
 cd backend
 python -m venv .venv
 .\.venv\Scripts\Activate.ps1
 python -m pip install --upgrade pip
+python -m pip install -r requirements.txt
 ```
 
-Install the project's backend dependencies using its existing dependency file, if present:
+If PowerShell blocks activation, you can run the environment's Python directly using `.\.venv\Scripts\python.exe`.
+
+### 3. Set the JWT secret
+
+The current backend reads `CARECIRCLE_SECRET_KEY` from the process environment. Generate a strong local development secret:
 
 ```powershell
-pip install -r requirements.txt
+$env:CARECIRCLE_SECRET_KEY = python -c "import secrets; print(secrets.token_urlsafe(48))"
 ```
 
-If `backend\requirements.txt` does not exist, install the dependencies specified by the project instead.
+Keep this terminal open while running the backend. This command sets the variable for the current PowerShell session.
 
-Configure required environment variables using a local `.env` file or the configuration method used by the application. Never commit real secrets.
+The `.env.example` file documents the variable; it is not automatically loaded by the current `security.py`.
 
-Start the API:
+**Security warning:** The current security module contains a hardcoded fallback secret if the environment variable is missing. Remove that fallback and require a configured secret before using the application outside local development.
+
+### 4. Start the backend
+
+From the `backend` directory:
 
 ```powershell
 python -m uvicorn app.main:app --reload
 ```
 
-The backend should be available at:
+Local endpoints:
 
-`http://127.0.0.1:8000`
+- API: http://127.0.0.1:8000
+- Interactive API documentation: http://127.0.0.1:8000/docs
+- Health check: http://127.0.0.1:8000/api/health
 
-Interactive API documentation:
+The application creates missing database tables on startup. The SQLite database is stored at `backend/securex.db`.
 
-`http://127.0.0.1:8000/docs`
+### 5. Start the frontend
 
-### 3. Set up the frontend
-
-Open a **second PowerShell terminal** from the project root:
+Open a second PowerShell terminal in the repository root:
 
 ```powershell
 cd frontend
@@ -119,57 +136,70 @@ npm install
 npm run dev
 ```
 
-Open the local URL printed by Vite, usually:
+Open the local address printed by Vite, usually:
 
-`http://localhost:5173`
+http://localhost:5173
 
-### 4. Configure frontend-to-backend communication
+Ensure the frontend API URL and FastAPI CORS configuration match the addresses being used.
 
-Ensure the frontend API base URL matches the running backend. If the frontend and backend use different ports, configure CORS in FastAPI to allow the frontend origin.
+## Environment Variables
 
-Follow any additional environment or database initialization instructions required by the current project configuration.
+| Variable | Purpose |
+|---|---|
+| `CARECIRCLE_SECRET_KEY` | Signs and validates JWT access tokens |
 
-## 🔐 Security and Privacy
+Never commit `.env` files, real credentials, access tokens, private documents, or production databases.
 
-SecureX is intended to assist document review, not replace authoritative verification.
+## Testing
 
-- Do not upload real identity documents to an untrusted deployment.
-- Keep credentials, secret keys, and private data out of Git.
-- Use synthetic documents for demonstrations and testing.
-- Restrict document access to authorized users.
-- Avoid treating an automated risk score as proof of fraud.
-- Verify digital signatures or issuer records through appropriate trusted mechanisms where available.
+Backend test dependencies are listed in `backend/tests/requirements.txt`.
 
-## 🧪 Testing
+Install them in the active backend environment if needed:
 
-Use authorized synthetic documents to evaluate the application. Test normal documents, modified samples, low-quality scans, invalid uploads, and inconclusive cases.
+```powershell
+python -m pip install -r tests/requirements.txt
+```
 
-Do not claim accuracy, precision, recall, or fraud-detection performance without measured evaluation results.
+Automated test coverage and results must be verified separately. Do not assume the application passes tests until they have been implemented and executed.
 
-## 🗺️ Roadmap
+Use synthetic documents and fictional identities for demonstrations. See `sample_data/README.md` for suggested test scenarios.
 
-Potential future improvements include:
+## Technical Documentation
 
-- More robust document tampering analysis.
-- Improved OCR and identity-field extraction.
-- Cryptographic signature validation.
-- Trusted issuer verification integrations.
-- Enhanced reviewer workflows and audit logs.
-- Automated testing and documented performance evaluation.
+See [`docs/TECHNICAL_DESIGN.md`](docs/TECHNICAL_DESIGN.md) for the architecture overview, database models, security notes, and development guidance.
 
-## 👨‍💻 Author
+## Security and Privacy
 
-**Ritik Sharma**
+- Use synthetic data for demonstrations and testing.
+- Enforce authorization for every protected record and endpoint.
+- Validate uploaded files by content and size.
+- Store sensitive files privately.
+- Use HTTPS in production.
+- Apply a documented retention and deletion policy.
+- Never treat OCR output or an anomaly score as definitive proof of fraud.
 
-Computer Science and Engineering student interested in software development, AI, and cybersecurity.
+## Roadmap
 
-- **GitHub:** [CodeSprint-bit](https://github.com/CodeSprint-bit)
-- **Project:** [SecureX Repository](https://github.com/CodeSprint-bit/SecureX)
+Potential improvements include:
 
-## 📄 License
+- More robust and evaluated document-tampering analysis
+- OCR field extraction and validation
+- Cryptographic signature verification
+- Authorized issuer-verification integrations
+- Reviewer workflows and audit logging
+- Automated tests and reproducible performance evaluations
 
-A license has not yet been specified. Add a `LICENSE` file before distributing the project under an open-source license.
+## Author
+
+Ritik Sharma
+
+- GitHub: https://github.com/CodeSprint-bit
+- Repository: https://github.com/CodeSprint-bit/SecureX
+
+## License
+
+This project is distributed under the MIT License. See [`LICENSE`](LICENSE).
 
 ---
 
-*SecureX aims to make document screening more efficient, transparent, and explainable while keeping human review and authoritative verification central to the process.*
+SecureX aims to make document screening more efficient and explainable while keeping human review and authoritative verification central to the process.

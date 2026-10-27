@@ -11,7 +11,9 @@ password_hasher = PasswordHash.recommended()
 SECRET_KEY = os.getenv("CARECIRCLE_SECRET_KEY")
 
 if not SECRET_KEY:
-    SECRET_KEY = "securex-development-only-change-this-before-deployment"
+    raise RuntimeError(
+        "CARECIRCLE_SECRET_KEY must be configured before starting SecureX."
+    )
 
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 30

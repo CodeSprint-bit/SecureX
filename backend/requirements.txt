@@ -1,0 +1,14 @@
+fastapi
+uvicorn[standard]
+sqlalchemy
+pydantic-settings
+email-validator
+pwdlib[argon2]
+PyJWT
+python-multipart
+pillow
+opencv-python-headless
+pymupdf
+pytesseract
+pyzbar
+reportlab
