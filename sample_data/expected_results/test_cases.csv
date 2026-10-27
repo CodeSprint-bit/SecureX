@@ -1,0 +1,9 @@
+﻿Test ID,Fixture,Scenario,Expected Result,Actual Result,Status
+TC-01,sample_id_clean.png,Valid synthetic image upload,Accepted if PNG uploads are supported,,Not Run
+TC-02,sample_id_clean.pdf,Valid synthetic PDF upload,Accepted if PDF uploads are supported,,Not Run
+TC-03,sample_id_altered_date.png,Altered date fixture,Only report an anomaly if an enabled check detects it,,Not Run
+TC-04,sample_id_low_quality.jpg,Low-resolution image,Report OCR uncertainty when applicable,,Not Run
+TC-05,qr_matching.png,Matching QR fields,Decoded fields match the clean sample,,Not Run
+TC-06,qr_mismatching.png,Mismatching QR DOB,DOB mismatch if decoding and field comparison are implemented,,Not Run
+TC-07,malformed.pdf,Malformed PDF,Graceful rejection; server remains available,,Not Run
+TC-08,sample_id_clean.png,Authorization test,A different user must not access this user's private document,,Not Run

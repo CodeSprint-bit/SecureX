@@ -1,0 +1,18 @@
+{
+  "matching": {
+    "dataset": "SecureX-SYNTHETIC-QA",
+    "test_case": "QR-MATCH-01",
+    "document_number": "TEST-000042",
+    "name": "ALEX SAMPLE",
+    "date_of_birth": "2001-04-15",
+    "notice": "NOT VALID FOR IDENTIFICATION"
+  },
+  "mismatching": {
+    "dataset": "SecureX-SYNTHETIC-QA",
+    "test_case": "QR-MISMATCH-01",
+    "document_number": "TEST-000042",
+    "name": "ALEX SAMPLE",
+    "date_of_birth": "2001-04-19",
+    "notice": "NOT VALID FOR IDENTIFICATION"
+  }
+}
